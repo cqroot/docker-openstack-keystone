@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.27
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_PASS
+
+  keystone:
+    image: openstack-keystone
+    build: .
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    ports:
+      - "35357:35357"
+      - "5000:5000"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MYSQL_PASS
