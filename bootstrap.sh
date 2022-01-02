@@ -1,4 +1,4 @@
-#!/bin/bash
+#90a85be7d054!/bin/bash
 
 if [ -f "/startup" ]; then
     cat > /etc/keystone/keystone.conf << EOF
@@ -23,7 +23,7 @@ EOF
     fi
     rm -rf /keystone.sql
 
-    su -s /bin/sh -c "keystone-manage db_sync" keystone
+    keystone-manage db_sync
 
     keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
     keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
