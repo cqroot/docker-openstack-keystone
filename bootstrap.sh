@@ -1,4 +1,4 @@
-#90a85be7d054!/bin/bash
+#!/bin/bash
 
 if [ -f "/startup" ]; then
     cat > /etc/keystone/keystone.conf << EOF
