@@ -21,7 +21,6 @@ RUN          apt-get update && \
              apt-get install -y \
                  keystone apache2 libapache2-mod-wsgi-py3 python3-pip libmysqlclient-dev python3-openstackclient \
                  netcat mysql-client \
-                 telnet net-tools vim \
                  && \
              pip3 --no-cache-dir install mysqlclient && \
              rm -rf /var/lib/apt/lists/* && \
