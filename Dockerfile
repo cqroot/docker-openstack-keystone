@@ -59,6 +59,8 @@ RUN          apt-get update && \
                  PyMySQL==1.0.2 \
                  keystone==20.0.0 \
              && \
+             sed -i 's/^Include ports.conf$/# Include ports.conf/g' apache2.conf && \
+             echo "ServerName keystone" >> /etc/apache2/apache2.conf && \
              groupadd keystone && useradd keystone -d /home/keystone -g keystone && \
              mkdir -p /etc/keystone /var/log/keystone /home/keystone && \
              chown keystone:keystone /var/log/keystone && \
