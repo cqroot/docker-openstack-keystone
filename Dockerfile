@@ -3,14 +3,6 @@ MAINTAINER   cqroot "cqroot@outlook.com"
 
 EXPOSE       5000 35357
 
-ENV          OS_USERNAME=admin
-ENV          OS_PASSWORD=ADMIN_PASS
-ENV          OS_PROJECT_NAME=admin
-ENV          OS_USER_DOMAIN_NAME=Default
-ENV          OS_PROJECT_DOMAIN_NAME=Default
-ENV          OS_AUTH_URL=http://keystone:35357/v3
-ENV          OS_IDENTITY_API_VERSION=3
-
 COPY         bootstrap.sh etc/keystone.sql /
 COPY         etc/sources.list /etc/apt/sources.list
 
@@ -59,8 +51,7 @@ RUN          apt-get update && \
                  PyMySQL==1.0.2 \
                  keystone==20.0.0 \
              && \
-             sed -i 's/^Include ports.conf$/# Include ports.conf/g' apache2.conf && \
-             echo "ServerName keystone" >> /etc/apache2/apache2.conf && \
+             sed -i 's/^Include ports.conf$/# Include ports.conf/g' /etc/apache2/apache2.conf && \
              groupadd keystone && useradd keystone -d /home/keystone -g keystone && \
              mkdir -p /etc/keystone /var/log/keystone /home/keystone && \
              chown keystone:keystone /var/log/keystone && \
