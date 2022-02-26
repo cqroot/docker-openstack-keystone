@@ -33,18 +33,6 @@ EOF
         --bootstrap-internal-url http://${KEYSTONE_SERVER_IP}:5000/v3/ \
         --bootstrap-public-url http://${KEYSTONE_SERVER_IP}:5000/v3/ \
         --bootstrap-region-id RegionOne
-
-    cat > /root/admin-openrc << EOF
-export OS_USERNAME=admin
-export OS_PASSWORD=ADMIN_PASS
-export OS_PROJECT_NAME=admin
-export OS_USER_DOMAIN_NAME=Default
-export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://${KEYSTONE_SERVER_IP}:35357/v3
-export OS_IDENTITY_API_VERSION=3
-EOF
-
-    echo "ServerName ${KEYSTONE_SERVER_IP}" >> /etc/apache2/apache2.conf
 }
 
 if [ -f "/startup" ]; then
@@ -59,7 +47,20 @@ if [ -f "/startup" ]; then
 
     if !(env | grep -qi KEYSTONE_NO_INIT); then
         InitKeystone
+    else
+        chown -R keystone:keystone /etc/keystone
     fi
+
+    cat > /root/admin-openrc << EOF
+export OS_USERNAME=admin
+export OS_PASSWORD=ADMIN_PASS
+export OS_PROJECT_NAME=admin
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_AUTH_URL=http://${KEYSTONE_SERVER_IP}:35357/v3
+export OS_IDENTITY_API_VERSION=3
+EOF
+    echo "ServerName ${KEYSTONE_SERVER_IP}" >> /etc/apache2/apache2.conf
 
     rm -f /startup
 fi

@@ -1,6 +1,7 @@
 FROM         debian:stable-20220125-slim
 MAINTAINER   cqroot "cqroot@outlook.com"
 
+ENV          TZ=Asia/Shanghai
 EXPOSE       5000 35357
 
 COPY         bootstrap.sh etc/keystone.sql /
