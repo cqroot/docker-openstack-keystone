@@ -29,15 +29,15 @@ EOF
     keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
     keystone-manage bootstrap --bootstrap-password $OS_PASSWORD \
-        --bootstrap-admin-url http://${KEYSTONE_SERVER_IP}:35357/v3/ \
-        --bootstrap-internal-url http://${KEYSTONE_SERVER_IP}:5000/v3/ \
-        --bootstrap-public-url http://${KEYSTONE_SERVER_IP}:5000/v3/ \
+        --bootstrap-admin-url http://${KEYSTONE_HOST}:35357/v3/ \
+        --bootstrap-internal-url http://${KEYSTONE_HOST}:5000/v3/ \
+        --bootstrap-public-url http://${KEYSTONE_HOST}:5000/v3/ \
         --bootstrap-region-id RegionOne
 }
 
 if [ -f "/startup" ]; then
-    if !(env | grep -qi KEYSTONE_SERVER_IP); then
-        echo 'KEYSTONE_SERVER_IP not provided'
+    if !(env | grep -qi KEYSTONE_HOST); then
+        echo 'KEYSTONE_HOST not provided'
         exit 1
     fi
 

@@ -10,7 +10,7 @@ run:
 	docker run -itd --net=host \
 		--hostname keystone --name $(container_name) \
 		-e KEYSTONE_CONNECTION=mysql+pymysql://keystone:KEYSTONE_DBPASS@127.0.0.1:3306/keystone \
-		-e KEYSTONE_SERVER_IP=127.0.0.1 \
+		-e KEYSTONE_HOST=127.0.0.1 \
 		$(image_name)
 
 .PHONY: exec
