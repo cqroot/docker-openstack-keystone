@@ -57,10 +57,10 @@ export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://${KEYSTONE_SERVER_IP}:35357/v3
+export OS_AUTH_URL=http://${KEYSTONE_HOST}:35357/v3
 export OS_IDENTITY_API_VERSION=3
 EOF
-    echo "ServerName ${KEYSTONE_SERVER_IP}" >> /etc/apache2/apache2.conf
+    echo "ServerName ${KEYSTONE_HOST}" >> /etc/apache2/apache2.conf
 
     rm -f /startup
 fi
