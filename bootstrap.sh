@@ -12,7 +12,7 @@ provider = fernet
 EOF
 
     if [ ! -n "$KEYSTONE_CONNECTION" ]; then
-        KEYSTONE_CONNECTION=sqlite:///keystone.db
+        KEYSTONE_CONNECTION=sqlite:////keystone.db
     fi
     echo "connection = $KEYSTONE_CONNECTION" >> /etc/keystone/keystone.conf
 
@@ -30,8 +30,7 @@ EOF
 
 if [ -f "/startup" ]; then
     if !(env | grep -qi KEYSTONE_HOST); then
-        echo 'KEYSTONE_HOST not provided'
-        exit 1
+        KEYSTONE_HOST=${KEYSTONE_HOST:-$HOSTNAME}
     fi
 
     if !(env | grep -qi OS_PASSWORD); then

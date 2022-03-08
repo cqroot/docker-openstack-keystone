@@ -4,11 +4,11 @@ Dockerfile for OpenStack Keystone.
 
 ## Docker ENV
 
-| ENV                 | Required | Description     |
-| :------------------ | :------- | :-------------- |
-| KEYSTONE_CONNECTION |          |                 |
-| KEYSTONE_HOST       | yes      | current node ip |
-| KEYSTONE_NO_INIT    |          |                 |
+| ENV                 | Description     |
+| :------------------ | :-------------- |
+| KEYSTONE_CONNECTION |                 |
+| KEYSTONE_HOST       | current node ip |
+| KEYSTONE_NO_INIT    |                 |
 
 ## Usage
 

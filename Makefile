@@ -7,11 +7,9 @@ build:
 
 .PHONY: run
 run:
-	docker run -itd --net=host \
+	docker run -itd -p 5000:5000 -p 35357:35357 \
 		--hostname keystone --name $(container_name) \
 		-v /etc/keystone:/etc/keystone \
-		-e KEYSTONE_CONNECTION=mysql+pymysql://keystone:KEYSTONE_DBPASS@127.0.0.1:3306/keystone \
-		-e KEYSTONE_HOST=127.0.0.1 \
 		$(image_name)
 
 .PHONY: exec

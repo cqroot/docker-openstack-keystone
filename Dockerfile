@@ -14,6 +14,7 @@ RUN          apt-get update && \
              pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple \
                  PyMySQL==1.0.2 \
                  keystone==20.0.0 \
+                 python-openstackclient==5.7.0 \
              && \
              sed -i 's/^Include ports.conf$/# Include ports.conf/g' /etc/apache2/apache2.conf && \
              groupadd keystone && useradd keystone -d /home/keystone -g keystone && \
