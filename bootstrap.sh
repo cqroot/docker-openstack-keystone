@@ -11,17 +11,10 @@ provider = fernet
 [database]
 EOF
 
-    if env | grep -qi MYSQL_ROOT_PASSWORD; then
-        while ! nc -z ${MYSQL_HOST:-mysql} 3306; do echo 'waiting for mysql'; sleep 3s; done
-        mysql -uroot -p$MYSQL_ROOT_PASSWORD -h${MYSQL_HOST:-mysql} </keystone.sql
-        echo "connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@${MYSQL_HOST:-mysql}:3306/keystone" >> /etc/keystone/keystone.conf
-    else
-        if [ ! -n "$KEYSTONE_CONNECTION" ]; then
-            KEYSTONE_CONNECTION=sqlite:///keystone.db
-        fi
-        echo "connection = $KEYSTONE_CONNECTION" >> /etc/keystone/keystone.conf
+    if [ ! -n "$KEYSTONE_CONNECTION" ]; then
+        KEYSTONE_CONNECTION=sqlite:///keystone.db
     fi
-    rm -rf /keystone.sql
+    echo "connection = $KEYSTONE_CONNECTION" >> /etc/keystone/keystone.conf
 
     keystone-manage db_sync
 

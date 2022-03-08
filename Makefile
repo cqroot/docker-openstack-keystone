@@ -9,6 +9,7 @@ build:
 run:
 	docker run -itd --net=host \
 		--hostname keystone --name $(container_name) \
+		-v /etc/keystone:/etc/keystone \
 		-e KEYSTONE_CONNECTION=mysql+pymysql://keystone:KEYSTONE_DBPASS@127.0.0.1:3306/keystone \
 		-e KEYSTONE_HOST=127.0.0.1 \
 		$(image_name)
@@ -25,11 +26,3 @@ clean:
 .PHONY: log
 log:
 	docker logs -f $(container_name)
-
-.PHONY: compose-up
-compose-up:
-	docker-compose up -d
-
-.PHONY: compose-down
-compose-down:
-	docker-compose down -v
