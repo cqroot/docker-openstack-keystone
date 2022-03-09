@@ -1,6 +1,6 @@
 #!/bin/bash
 
-InitKeystone() {
+init_keystone() {
     cat > /etc/keystone/keystone.conf << EOF
 [DEFAULT]
 log_dir = /var/log/keystone
@@ -38,7 +38,7 @@ if [ -f "/startup" ]; then
     fi
 
     if !(env | grep -qi KEYSTONE_NO_INIT); then
-        InitKeystone
+        init_keystone
     else
         chown -R keystone:keystone /etc/keystone
     fi
