@@ -11,9 +11,10 @@ provider = fernet
 [database]
 EOF
 
-    if [ ! -n "$KEYSTONE_CONNECTION" ]; then
-        KEYSTONE_CONNECTION=sqlite:////keystone.db
-    fi
+    PUBLIC_PORT=${PUBLIC_PORT:-5000}
+    ADMIN_PORT=${ADMIN_PORT:-35357}
+    KEYSTONE_CONNECTION=${KEYSTONE_CONNECTION:-sqlite:////keystone.db}
+
     echo "connection = $KEYSTONE_CONNECTION" >> /etc/keystone/keystone.conf
 
     keystone-manage db_sync
@@ -22,9 +23,9 @@ EOF
     keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
     keystone-manage bootstrap --bootstrap-password $OS_PASSWORD \
-        --bootstrap-admin-url http://${KEYSTONE_HOST}:35357/v3/ \
-        --bootstrap-internal-url http://${KEYSTONE_HOST}:5000/v3/ \
-        --bootstrap-public-url http://${KEYSTONE_HOST}:5000/v3/ \
+        --bootstrap-admin-url http://${KEYSTONE_HOST}:${ADMIN_PORT}/v3/ \
+        --bootstrap-internal-url http://${KEYSTONE_HOST}:${PUBLIC_PORT}/v3/ \
+        --bootstrap-public-url http://${KEYSTONE_HOST}:${PUBLIC_PORT}/v3/ \
         --bootstrap-region-id RegionOne
 }
 
@@ -49,7 +50,7 @@ export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://${KEYSTONE_HOST}:35357/v3
+export OS_AUTH_URL=http://${KEYSTONE_HOST}:${ADMIN_PORT}/v3
 export OS_IDENTITY_API_VERSION=3
 EOF
     echo "ServerName ${KEYSTONE_HOST}" >> /etc/apache2/apache2.conf
